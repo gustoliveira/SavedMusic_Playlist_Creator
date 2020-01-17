@@ -5,7 +5,7 @@ A simple _Python_ script that runs with _Spotipy_, that read a set of a choosen 
 ## __Motivation__
 
 I found [spotify-downloader](https://github.com/ritiek/spotify-downloader) on Github, a program that takes a link from a song on Spotify, downloads it from YouTube and applies metadata and album art. for the information given by the API. There is an option, by linking a playlist, to create a .txt file with all links to the songs in the playlist, and to download all.
-But it doesn't contain a proper link, so it's impossible to use the program easily without creating and adding all the songs manually, so I made this script to automate this task.
+But the Saved Tracks library doesn't contain a proper link, so it's impossible to use the program easily without creating and adding all the songs manually, so I made this script to automate this task.
 
 ## __Requirements__
 
