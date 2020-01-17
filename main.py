@@ -3,8 +3,9 @@ import spotipy
 import spotipy.util as util
 import functions
 
+username = str(input("Press your Spotify username: "))
+
 # Define variables for authentication and to get the token
-username = "soueunaovc"
 scope = 'user-library-read user-library-modify playlist-modify-public playlist-read-private user-read-private'
 token = util.prompt_for_user_token(username, scope)
 
