@@ -37,7 +37,7 @@ Spotipy offers the ```util.prompt_for_user_token ```method for authentication an
 
 * __Putting your credentials directly into the method as arguments:__
 
-```
+```{python}
 util.prompt_for_user_token(username,scope,client_id='your-spotify-client-id',client_secret='your-spotify-client-secret',redirect_uri='your-app-redirect-url')
 ```
 
@@ -48,7 +48,11 @@ export SPOTIPY_CLIENT_ID='your-spotify-client-id'
 export SPOTIPY_CLIENT_SECRET='your-spotify-client-secret'
 export SPOTIPY_REDIRECT_URI='https://google.com/'
 ```
+Than you don't need put directly in the ```util.prompt_for_user_token ```method:
 
+```{python}
+util.prompt_for_user_token(username,scope)
+```
 ## __Running__
 
 * __Step 1__: Run _main.py_:
