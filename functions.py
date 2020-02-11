@@ -1,3 +1,10 @@
+import spotipy
+
+# Define necessary lists
+AllMusicList = []
+allPlaylists = []
+finalList = []
+
 # Get all the musics from one playlist
 def user_playlist_tracks_full(sp, user, playlist_id, fields=None, market=None):
     # first run through also retrieves total no of songs in library
@@ -19,18 +26,20 @@ def current_user_saved_tracks_add_list(sp, AllMusicList):
 
     # Create a list, allIDs, and add the ID of only one ID, and check
     # Itn't the fastest way, and is possible check 50 musics at the time
-    # But at a 'random' point, the script broke
     allIDs = []
     for i in range(len(AllMusicList)):
+        print("Checking ", i)
         allIDs.append(AllMusicList[i])
         teste = sp.current_user_saved_tracks_contains(allIDs)
         if teste[0] == False:
             sp.current_user_saved_tracks_add(allIDs)
+            print('\tAdded')
+        else:
+            print('\tChecked')
 
-        print("Checked", i)
         allIDs.clear()
 
-    print("All musics on saved tracks")
+    print("All musics on Saved Tracks")
 
 # Print all the saved musics at the console
 def current_user_saved_tracks_print_all(sp):
@@ -91,3 +100,49 @@ def create_playlist_with_saved_tracks(sp, userID, name="Saved Tracks"):
         print("Added", i)
 
     print("Added all saved music to the new playlist")
+
+# Print all playlist names
+def show_all_playlists(results):
+    for i in range(results['total']):
+        name = results['items'][i]['name']
+        print(i, ' ', name)
+
+# Print all playlist names with identification number and return a list with then
+def show_all_playlists_and_return_a_list(results):
+    for i in range(results['total']):
+        name = results['items'][i]['name']
+        allPlaylists.append(name)
+        print(i, ' ', name)
+    return allPlaylists
+
+# Read identification number of the playlists
+def read_which_playlists(results):
+    allPlaylists = show_all_playlists_and_return_a_list(results)
+    qnts = int(input("How many playlists: "))
+    print("Press their numbers: ")
+    for i in range(qnts):
+        msg = str(i+1) + ': '
+        aux = int(input(msg))
+        finalList.append(allPlaylists[aux]) # Add the playlist in the list to verify
+    return finalList
+
+def show_all_music_and_return_AllMusicList(results, sp, userID):
+    finalList = read_which_playlists(results)
+    for i in range(len(finalList)):
+        aux = finalList[i]
+        for j in range(results['total']):
+            if results['items'][j]['name'] == aux:
+                name = results['items'][j]['name']
+                td = results['items'][j]['tracks']['total']
+                playlistID = results['items'][j]['id']
+
+                print("Playlist name: {} ({} Tracks)".format(name.upper(), td))
+
+                # Get all the musics from the playlist
+                allMusic = user_playlist_tracks_full(sp, userID, playlistID)
+                for j in range(td):
+                    print('\t', allMusic[j]['track']['name'], ' - ', allMusic[j]['track']['artists'][0]['name'])
+                    # If the music isn't a in a local file, add in the list
+                    if allMusic[j]['track']['is_local'] == False:
+                        AllMusicList.append(allMusic[j]['track']['id'])
+    return AllMusicList
