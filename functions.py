@@ -25,7 +25,7 @@ def current_user_saved_tracks_add_list(sp, AllMusicList):
     print("Start checking if songs are in saved songs")
 
     # Create a list, allIDs, and add the ID of only one ID, and check
-    # Itn't the fastest way, and is possible check 50 musics at the time
+    # It isn't the fastest way, and is possible check 50 musics at the time
     allIDs = []
     for i in range(len(AllMusicList)):
         print("Checking ", i)
@@ -40,6 +40,28 @@ def current_user_saved_tracks_add_list(sp, AllMusicList):
         allIDs.clear()
 
     print("All musics on Saved Tracks")
+
+# Check if all the music in the given list is a saved music
+# If it is, remove from saved musics
+def current_user_saved_tracks_remove_list(sp, AllMusicList):
+    print("Start checking if songs are in saved songs")
+
+    # Create a list, allIDs, and add the ID of only one ID, and check
+    # It isn't the fastest way, and is possible check 50 musics at the time
+    allIDs = []
+    for i in range(len(AllMusicList)):
+        print("Checking ", i)
+        allIDs.append(AllMusicList[i])
+        teste = sp.current_user_saved_tracks_contains(allIDs)
+        if teste[0] == True:
+            sp.current_user_saved_tracks_delete(allIDs)
+            print('\tRemoved')
+        else:
+            print('\tWasn\'t')
+
+        allIDs.clear()
+
+    print("All musics removed from Saved Tracks")
 
 # Print all the saved musics at the console
 def current_user_saved_tracks_print_all(sp):

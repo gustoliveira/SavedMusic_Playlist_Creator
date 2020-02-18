@@ -27,6 +27,7 @@ while True:
     print('\t2 - Add songs from a playlist to the Saved Musics library')
     print('\t3 - Create a playlist and add songs from the Saved Musics library')
     print('\t4 - Take repeated songs from Saved Musics')
+    print('\t5 - Remove all songs from a given playlist from the Saved Musics library')
     option = input('\nEnter the code of the chosen option: ')
 
     try:
@@ -36,6 +37,7 @@ while True:
         continue
 
     if(option == 0):
+        print("Thanks for using =)")
         sys.exit()
     elif(option == 1):
         functions.show_all_playlists(results)
@@ -49,6 +51,9 @@ while True:
     elif(option == 4):
         print('In development... \nEnter another option')
         continue
+    elif(option == 5):
+        AllMusicsList = functions.show_all_music_and_return_AllMusicList(results, sp, userID)
+        functions.current_user_saved_tracks_remove_list(sp, AllMusicsList)
     else:
         print('The option entered is not valid... \nEnter another option')
         continue
